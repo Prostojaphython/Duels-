@@ -26,12 +26,12 @@ public class MiniGun : Weapon
         if (Physics.Raycast(ray, out hit))
         {
             GameObject gameBullet = Instantiate(particle, hit.point, hit.transform.rotation);
-            //if(hit.collider.CompareTag("enemy"))
+            if(hit.collider.CompareTag("enemy"))
             {
                 //Число 10 можешь поменять на своё. Это урон, который наносит одна пуля
-                //hit.collider.gameObject.GetComponent<Enemy>().ChangeHealth(3);
+                hit.collider.gameObject.GetComponent<Enemy>().ChangeHealth(3);
             }
-            //Destroy(gameBullet, 1);
+            Destroy(gameBullet, 1);
         }
 
     }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-//using Photon.Pun;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour //PunCallbacks
+public class Weapon : MonoBehaviourPunCallbacks
 {   //Объект Particle System, который будет оставлять след от пуль
     [SerializeField] protected GameObject particle;
     //Камера(понадобится для определения центра экрана)
@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour //PunCallbacks
     // Update is called once per frame
     void Update()
     {   
-        //if(photonView.IsMine)
+        if(photonView.IsMine)
         {
             //Запускаем таймер
             timer += Time.deltaTime;
