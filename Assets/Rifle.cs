@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class Rifle : Pistol
 {
-    // Start is called before the first frame update
     void Start()
     {
-       //Задержка между выстрелами(можно указать собственную)
+        //Задержка между выстрелами(можно указать собственную)
         cooldown = 0.2f;
-        auto = true;
-        ammoCurrent = 30;
-        ammoMax = 30;
-        ammoBackPack = 60;
         //Стрельба автоматическая, значит при зажатой клавише мыши оружие будет стрелять непрерывно учитывая задержку
-         
+        auto = true;
     }
 
-    
+
 }

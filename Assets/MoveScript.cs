@@ -22,6 +22,8 @@ public class MoveScript : MonoBehaviour
     public float groundDistance = 0.3f;
     public LayerMask groundMask;
     [SerializeField] Animator anim;
+    [SerializeField] GameObject pistol, rifle, miniGun;
+    bool isPistol, isRifle, isMiniGun;
 
     void Start()
     {
@@ -37,6 +39,15 @@ public class MoveScript : MonoBehaviour
         GroundCheck();        // Проверка выведена в отдельный метод
         HandleMouseLook();
         HandleJump();
+        if(Input.GetKeyDown(KeyCode.Alpha1) && isPistol)
+        {
+            ChooseWeapon(Weapons.Pistol);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) && isRifle)
+        {
+            ChooseWeapon(Weapons.Rifle);
+        }
+        //Здесь допиши логику для минигана и для отсутствия оружия
 
     }
 
@@ -61,6 +72,14 @@ public class MoveScript : MonoBehaviour
         velocity.z = targetVelocity.z;
         rb.velocity = velocity;
     }
+    public enum Weapons
+    {
+        None,
+        Pistol,
+        Rifle,
+
+    }
+    Weapons weapons = Weapons.None;
 
     void HandleJump()
     {
@@ -88,7 +107,7 @@ public class MoveScript : MonoBehaviour
     void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log("isGrounded = " + isGrounded);
+        //Debug.Log("isGrounded = " + isGrounded);
     }
 
     void OnDrawGizmosSelected()
@@ -104,4 +123,35 @@ public class MoveScript : MonoBehaviour
         isGrounded = true;
         anim.SetBool("Jump", false);
     }
+    public void ChooseWeapon(Weapons weapons)
+    {
+        anim.SetBool("Pistol", weapons == Weapons.Pistol);
+        anim.SetBool("Assault", weapons == Weapons.Rifle);
+        anim.SetBool("NoWeapon", weapons == Weapons.None);
+        pistol.SetActive(weapons == Weapons.Pistol);
+        rifle.SetActive(weapons == Weapons.Rifle);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.gameObject.tag)
+            {
+                case "pistol":
+                    if (!isPistol)
+                    {
+                        isPistol = true;
+                        ChooseWeapon(Weapons.Pistol);
+                    }
+                    break;
+                case "rifle":
+                    if (!isRifle)
+                    {
+                        isRifle = true;
+                        ChooseWeapon(Weapons.Rifle);
+                    }
+                    break;
+                default:
+                    break;
+        }
+            Destroy(other.gameObject);
+    }  
 }

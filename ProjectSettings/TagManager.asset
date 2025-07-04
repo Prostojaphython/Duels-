@@ -6,6 +6,9 @@ TagManager:
   tags:
   - FxTemporaire
   - Gun
+  - Bullet
+  - pistol
+  - rifle
   layers:
   - Default
   - TransparentFX
